@@ -1,0 +1,57 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+ <script language="JavaScript">
+<!--
+function autoResize(id){
+    var newheight;
+    var newwidth;
+
+    if(document.getElementById){
+        newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+        newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+    }
+
+    document.getElementById(id).height= (newheight) + "px";
+    document.getElementById(id).width= (newwidth) + "px";
+}
+//-->
+</script>
+<div class="well well-large" style="height: 550px;">
+<h1>DS18B20 1</h1>
+        <div id="wrap">
+             <iframe src="https://plot.ly/~kevans05/1/" width="100%" height="475" id="iframe1" marginheight="0" frameborder="0" onLoad="autoResize('iframe1');"></iframe>
+        </div>
+</div>
+<div class="well well-large" style="height: 250px;">
+    <H1>Statistical Data</H1>
+    <table width="100%">
+        <tr>
+            <td><b>Max Sample</b></td><td>{{StatsValue.MAX}}</td><td><b>Time Taken</b></td><td>{{StatsValue.maxTime}}</td>
+        </tr>
+        <tr>
+            <td><b>Min Sample</b></td><td>{{StatsValue.MIN}}</td><td><b>Time Taken</b></td><td>{{StatsValue.minTime}}</td>
+        </tr>
+        <tr>
+           <td><b>Mean</b></td><td>{{StatsValue.mean}}</td><td><b>Time Calculated At</b></td><td>{{StatsValue.TM}}</td>
+        </tr>
+        <tr>
+            <td><b>Median</b></td><td>{{StatsValue.Medians}}</td><td><b>Time Calculated At</b></td><td>{{StatsValue.TM}}</td>
+       </tr>
+       <tr>
+            <td><b>Standard Deviation</b></td><td>{{StatsValue.SSD}}</td><td><b>Time Calculated At</b></td><td>{{StatsValue.TM}}</td>
+       </tr>
+       <tr>
+            <td><b>Standard Variance</b></td><td>{{StatsValue.SV}}</td><td><b>Time Calculated At</b></td><td>{{StatsValue.TM}}</td>
+       </tr>
+       <tr>
+            <td><b>Number of Samples</b></td><td>{{StatsValue.Num}}</td><td><b>Time At</b></td><td>{{StatsValue.TM}}</td>
+       </tr>
+       <tr>
+            <td><b>FirstSample</b></td><td>{{StatsValue.FirstValue}}</td><td><b>Last Sample</b></td><td>{{StatsValue.LastValue}}</td>
+       </tr>
+    </table>
+</div>
+</ul>
+{% endblock %}

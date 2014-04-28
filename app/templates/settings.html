@@ -1,0 +1,38 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+ <script language="JavaScript">
+<!--
+function autoResize(id){
+    var newheight;
+    var newwidth;
+
+    if(document.getElementById){
+        newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+        newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+    }
+
+    document.getElementById(id).height= (newheight) + "px";
+    document.getElementById(id).width= (newwidth) + "px";
+}
+//-->
+</script>
+<h1>Settings</h1>
+<div class="well well-large" style="height: 550px;">
+        <div id="wrap">
+            <h3>Calibrate Devices</h3>
+            <p><i>Calibration is a comparison between measurements – one of known magnitude or correctness made or set with
+                one device and another measurement made in as similar a way as possible with a second device.</i></p>
+
+             <p><i>The device with the known or assigned correctness is called the standard. The second device is the unit
+                 under test, test instrument, or any of several other names for the device being calibrated(Wikipidia 2014). </i></p>
+
+            <p>The Designers of this product spent time to ensure that this devices was calibrated in so that the tamperers
+                calculated are with in reasonable error with the thermometer XXXXX. All sensors have been calibrated to be withing XDegrees C.
+            If you would wish to fourth calibrate this system you must enter the source code found on GITHUB</p>
+
+        </div>
+</div>
+</ul>
+{% endblock %}
