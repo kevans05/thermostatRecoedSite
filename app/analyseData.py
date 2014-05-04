@@ -1,5 +1,5 @@
 import dataset
-import statistics
+import numpy
 
 def connectToDB():
     db = dataset.connect('sqlite:///app.db')
@@ -20,23 +20,23 @@ def returnDataBaseData():
 
 def returnOurMean():
     data = returnDataBaseData()
-    return round(statistics.mean(data[0]),3), round(statistics.mean(data[1]),3), round(statistics.mean(data[2]),3)
+    return round(numpy.mean(data[0]),3), round(numpy.mean(data[1]),3), round(numpy.mean(data[2]),3)
 
 def returnOurMedian():
     data = returnDataBaseData()
-    return round(statistics.median(data[0]),3), round(statistics.median(data[1]),3), round(statistics.median(data[2]),3)
+    return round(numpy.median(data[0]),3), round(numpy.median(data[1]),3), round(numpy.median(data[2]),3)
 
 def returnOurMode():
     data = returnDataBaseData()
-    return round(statistics.mode(data[0]),3), round(statistics.mode(data[1]),3), round(statistics.mode(data[2]),3)
+    return round(numpy.mode(data[0]),3), round(numpy.mode(data[1]),3), round(numpy.mode(data[2]),3)
 
 def returnOurSSD():
     data = returnDataBaseData()
-    return round(statistics.stdev(data[0]),3), round(statistics.stdev(data[1]),3), round(statistics.stdev(data[2]),3)
+    return round(numpy.std(data[0]),3), round(numpy.std(data[1]),3), round(numpy.std(data[2]),3)
 
 def returnOurSV():
     data = returnDataBaseData()
-    return round(statistics.variance(data[0]),3), round(statistics.variance(data[1]),3), round(statistics.variance(data[2]),3)
+    return round(numpy.var(data[0]),3), round(numpy.var(data[1]),3), round(numpy.var(data[2]),3)
 
 def returnMaxAndTime():
     data = returnDataBaseData()

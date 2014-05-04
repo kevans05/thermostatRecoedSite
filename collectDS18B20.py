@@ -1,13 +1,11 @@
 import time, urllib, os, glob, socket
 from datetime import datetime
 
-
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
-
-def readsensor(input):
-    tempfile = open(input, "r").read()
+# function to read the temperature from ds18b20 temperature sensor on i2c
+def read_temperature(valueX):
+    tempfile = open(valueX)
     thetext = tempfile.read()
+    tempfile.close()
     tempdata = thetext.split("\n")[1].split(" ")[9]
     temperature = float(tempdata[2:])
     temperature = temperature / 1000

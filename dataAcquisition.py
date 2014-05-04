@@ -66,15 +66,14 @@ def placeInDB(temps1,temps2,temps3, timeOfMessurment):
 def creatDataPoint():
     #instad of calling random int i will use the functions the cody makes
     largePotGeneation = generateThreeTrace('./config.json')
-
     stream_A = creatStreamingGraph("DS18B20 1", './config.json',0)
     stream_B = creatStreamingGraph("DS18B20 2", './config.json',1)
     stream_C = creatStreamingGraph("MLX90614", './config.json',2)
-    w1= { 'field1': '/sys/bus/w1/devices/28-0000055fd19b/w1_slave',
-          'field2': '/sys/bus/w1/devices/28-0000058955a2/w1_slave'}
     while True:
-        temp1 = collectDS18B20.readsensor(w1[0])
-        temp2 = collectDS18B20.readsensor(w1[1])
+        sensorName_a = "/sys/bus/w1/devices/28-0000055fd19b/w1_slave"
+        sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
+        temp1 = collectDS18B20.read_temperature(sensorName_a)
+        temp2 = collectDS18B20.read_temperature(sensorName_b)
         temp3 = temp2+3
 
         timeOfMessurment = datetime.now()
