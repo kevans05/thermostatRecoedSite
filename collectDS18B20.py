@@ -9,4 +9,4 @@ def read_temperature(valueX):
     tempdata = thetext.split("\n")[1].split(" ")[9]
     temperature = float(tempdata[2:])
     temperature = temperature / 1000
-    return temperature
+    return round(temperature, 1)

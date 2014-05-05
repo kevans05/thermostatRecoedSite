@@ -40,19 +40,19 @@ def returnOurSV():
 
 def returnMaxAndTime():
     data = returnDataBaseData()
-    max_point_a = data[0].index(max(data[0]))
-    max_point_b = data[1].index(max(data[1]))
-    max_point_c = data[2].index(max(data[2]))
+    max_point_a = data[0].index(numpy.amax(data[0]))
+    max_point_b = data[1].index(numpy.amax(data[0]))
+    max_point_c = data[2].index(numpy.amax(data[0]))
     max_date = data[3]
-    return round(max(data[0]),3), round(max(data[1]),3), round(max(data[2]),3), max_date[max_point_a], max_date[max_point_c] ,max_date[max_point_c]
+    return numpy.amax(data[0]), numpy.amax(data[1]), numpy.amax(data[2]), max_date[max_point_a], max_date[max_point_b] ,max_date[max_point_c]
 
 def returnMinAndTime():
     data = returnDataBaseData()
-    min_point_a = data[0].index(min(data[0]))
-    min_point_b = data[1].index(min(data[1]))
-    min_point_c = data[2].index(min(data[2]))
+    min_point_a = data[0].index(numpy.amin(data[0]))
+    min_point_b = data[1].index(numpy.amin(data[0]))
+    min_point_c = data[2].index(numpy.amin(data[0]))
     min_date = data[3]
-    return round(min(data[0]),3), round(min(data[1]),3), round(min(data[2]),3), min_date[min_point_a], min_date[min_point_b] ,min_date[min_point_c]
+    return numpy.amin(data[0]), numpy.amin(data[1]), numpy.amin(data[2]), min_date[min_point_a], min_date[min_point_b] ,min_date[min_point_c]
 
 def returnLength():
     data = returnDataBaseData()

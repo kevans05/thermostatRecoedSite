@@ -4,6 +4,7 @@ import dataset
 import plotly
 import json
 import collectDS18B20
+import collectMLX90614
 from datetime import datetime
 from time import sleep
 
@@ -74,7 +75,7 @@ def creatDataPoint():
         sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
         temp1 = collectDS18B20.read_temperature(sensorName_a)
         temp2 = collectDS18B20.read_temperature(sensorName_b)
-        temp3 = temp2+3
+        temp3 = collectMLX90614.read_serial()
 
         timeOfMessurment = datetime.now()
         timeOfMessurment = timeOfMessurment.replace(microsecond=0)
