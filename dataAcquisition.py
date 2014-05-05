@@ -3,6 +3,7 @@ import random
 import dataset
 import plotly
 import json
+import  threading
 import collectDS18B20
 import collectMLX90614
 from datetime import datetime
@@ -63,27 +64,27 @@ def placeInDB(temps1,temps2,temps3, timeOfMessurment):
     temp3 = temps3
     table.insert(dict(temp1=temp1, temp2=temp2, temp3=temp3, dateAndTime=timeOfMessurment))
 
-
-def creatDataPoint():
-    #instad of calling random int i will use the functions the cody makes
+def inistalizeData():
     largePotGeneation = generateThreeTrace('./config.json')
     stream_A = creatStreamingGraph("DS18B20 1", './config.json',0)
     stream_B = creatStreamingGraph("DS18B20 2", './config.json',1)
     stream_C = creatStreamingGraph("MLX90614", './config.json',2)
-    while True:
-        sensorName_a = "/sys/bus/w1/devices/28-0000055fd19b/w1_slave"
-        sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
-        temp1 = collectDS18B20.read_temperature(sensorName_a)
-        temp2 = collectDS18B20.read_temperature(sensorName_b)
-        temp3 = collectMLX90614.read_serial()
+    return largePotGeneation, stream_A,stream_B,stream_C
 
-        timeOfMessurment = datetime.now()
-        timeOfMessurment = timeOfMessurment.replace(microsecond=0)
-        placeInDB(temp1,temp2,temp3,timeOfMessurment)
-        addPointToStreamingGraph(timeOfMessurment, temp1, stream_A)
-        addPointToStreamingGraph(timeOfMessurment, temp2, stream_B)
-        addPointToStreamingGraph(timeOfMessurment, temp3, stream_C)
-        addPointToLargeStreamingGraph(largePotGeneation,timeOfMessurment,temp1,temp2,temp3)
+def creatDataPoint(largePotGeneation,stream_A,stream_B,stream_C):
+    #instad of calling random int i will use the functions the cody makes
 
-        sleep(2)
-creatDataPoint()
+    sensorName_a = "/sys/bus/w1/devices/28-0000055fd19b/w1_slave"
+    sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
+    temp1 = collectDS18B20.read_temperature(sensorName_a)
+    temp2 = collectDS18B20.read_temperature(sensorName_b)
+    temp3 = collectMLX90614.read_serial()
+
+    timeOfMessurment = datetime.now()
+    timeOfMessurment = timeOfMessurment.replace(microsecond=0)
+    placeInDB(temp1,temp2,temp3,timeOfMessurment)
+    addPointToStreamingGraph(timeOfMessurment, temp1, stream_A)
+    addPointToStreamingGraph(timeOfMessurment, temp2, stream_B)
+    addPointToStreamingGraph(timeOfMessurment, temp3, stream_C)
+    addPointToLargeStreamingGraph(largePotGeneation,timeOfMessurment,temp1,temp2,temp3)
+    threading.Timer(10, creatDataPoint).start()
