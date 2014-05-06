@@ -78,7 +78,9 @@ def creatDataPoint(largePotGeneation,stream_A,stream_B,stream_C):
     sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
     temp1 = collectDS18B20.read_temperature(sensorName_a)
     temp2 = collectDS18B20.read_temperature(sensorName_b)
-    temp3 = collectMLX90614.read_serial()
+    temp3 = 0
+
+    print(collectMLX90614.read_serial())
 
     timeOfMessurment = datetime.now()
     timeOfMessurment = timeOfMessurment.replace(microsecond=0)
