@@ -1,15 +1,20 @@
 __author__ = 'Kevans05'
-#!/usr/bin/python3
 
-from serial import Serial
+import serial
+import re
 
-def read_serial():
-    ser = serial.Serial(port = "/dev/ttyO1", baudrate=9600)
-    ser.close()
-    ser.open()
-    if ser.isOpen():
-        line = ser.readline()
-        line = line.strip('*');
-    else:
-        line = 0
-    return line
+serial_pattern = r"T: (\d+\.\d*)\n";
+serial_port = '/dev/ttyACM0';
+serial_bauds = 9600;
+
+def open_serial_port() :
+  s = serial.Serial(serial_port, serial_bauds);
+  line = s.readline();
+  return s
+
+def read_temperature(s):
+  line = s.readline();
+  m = re.match(serial_pattern, line);
+  return float(m.group(1))
+
+
