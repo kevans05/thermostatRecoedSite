@@ -40,11 +40,17 @@ def returnOurSV():
 
 def returnMaxAndTime():
     data = returnDataBaseData()
-    max_point_a = data[0].index(numpy.amax(data[0]))
-    max_point_b = data[1].index(numpy.amax(data[0]))
-    max_point_c = data[2].index(numpy.amax(data[0]))
+    max_a = numpy.amax(data[0])
+    max_point_a = data[0].index(max_a)
+
+    max_b = numpy.amax(data[1])
+    max_point_b = data[1].index(max_b)
+
+    max_c = numpy.amax(data[2])
+    max_point_c = data[2].index(max_c)
+
     max_date = data[3]
-    return numpy.amax(data[0]), numpy.amax(data[1]), numpy.amax(data[2]), max_date[max_point_a], max_date[max_point_b] ,max_date[max_point_c]
+    return max_a, max_b, max_c, max_date[max_point_a], max_date[max_point_b] ,max_date[max_point_c]
 
 def returnMinAndTime():
     data = returnDataBaseData()

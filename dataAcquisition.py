@@ -20,7 +20,7 @@ def creatStreamingGraph(fileName, ConfigGile,chanID):
 
     p = plotly.plotly(username, api_key)
     layout = {'autosize': True, 'showlegend':True,'legend': {"x" : 1, "y" : 1},"xaxis": {"title":"Time"},"yaxis": {"title":"Temp (C)"}}
-    p.plot([{'x': [],'y': [],"name":fileName,'type': 'scatter', 'mode': 'lines+markers','stream': {'token': stream_token,'maxpoints': 30}}],filename=fileName, fileopt='overwrite',layout = layout, world_readable=True)
+    p.plot([{'x': [],'y': [],"name":fileName,'type': 'scatter', 'mode': 'lines+markers','stream': {'token': stream_token,'maxpoints': 60}}],filename=fileName, fileopt='overwrite',layout = layout, world_readable=True)
     s = plotly.stream(stream_token)
     return s
 def generateThreeTrace(ConfigGile):
@@ -35,11 +35,11 @@ def generateThreeTrace(ConfigGile):
     layout = {'autosize': True, 'showlegend':True,'legend': {"x" : 1, "y" : 1},"xaxis": {"title":"Time"},"yaxis": {"title":"Temp (C)"}}
     data = [
         {'x': [], 'y': [],"name":"DS18B20 1", 'type': 'scatter', 'mode': 'lines+markers', 'line': {'color': 'rgba(106, 45, 172, 1)'},
-         'stream': {'token': stream_tokenA, 'maxpoints': 30}},
+         'stream': {'token': stream_tokenA, 'maxpoints': 60}},
         {'x': [], 'y': [],"name":"DS18B20 2", 'type': 'scatter', 'mode': 'lines+markers', 'line': {'color':  'rgba(215, 40, 44, 1)'},
-            'stream': {'token': stream_tokenB, 'maxpoints': 30}},
+            'stream': {'token': stream_tokenB, 'maxpoints': 60}},
         {'x': [], 'y': [],"name":"MLX90614 1", 'type': 'scatter', 'mode': 'lines+markers', 'line': {'color': 'rgba(106, 240, 44, 1)'},
-            'stream': {'token': stream_tokenC, 'maxpoints': 30}}]
+            'stream': {'token': stream_tokenC, 'maxpoints': 60}}]
     p = plotly.plotly(username, api_key)
     p.plot(data, fileopt='overwrite',layout = {'autosize': True, 'showlegend':True,'legend': {"x" : 1, "y" : 1}})
     s4 = plotly.stream(stream_tokenA)
@@ -69,7 +69,9 @@ def inistalizeData():
     global stream_A
     global stream_B
     global stream_C
+    global serialID
 
+    serialID = collectMLX90614.open_serial_port()
     largePotGeneation = generateThreeTrace('./config.json')
     stream_A = creatStreamingGraph("DS18B20 1", './config.json',0)
     stream_B = creatStreamingGraph("DS18B20 2", './config.json',1)
@@ -82,7 +84,7 @@ def creatDataPoint():
     sensorName_b = "/sys/bus/w1/devices/28-0000058955a2/w1_slave"
     temp1 = collectDS18B20.read_temperature(sensorName_a)
     temp2 = collectDS18B20.read_temperature(sensorName_b)
-    temp3 = collectMLX90614.read_serial()
+    temp3 = collectMLX90614.read_temperature(serialID)
 
 
     timeOfMessurment = datetime.now()
@@ -92,4 +94,4 @@ def creatDataPoint():
     addPointToStreamingGraph(timeOfMessurment, temp2, stream_B)
     addPointToStreamingGraph(timeOfMessurment, temp3, stream_C)
     addPointToLargeStreamingGraph(largePotGeneation,timeOfMessurment,temp1,temp2,temp3)
-    threading.Timer(2, creatDataPoint).start()
+    threading.Timer(1, creatDataPoint).start()
