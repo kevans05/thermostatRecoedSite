@@ -65,13 +65,19 @@ def placeInDB(temps1,temps2,temps3, timeOfMessurment):
     table.insert(dict(temp1=temp1, temp2=temp2, temp3=temp3, dateAndTime=timeOfMessurment))
 
 def inistalizeData():
+    global largePotGeneation
+    global stream_A
+    global stream_B
+    global stream_C
+
+
     largePotGeneation = generateThreeTrace('./config.json')
     stream_A = creatStreamingGraph("DS18B20 1", './config.json',0)
     stream_B = creatStreamingGraph("DS18B20 2", './config.json',1)
     stream_C = creatStreamingGraph("MLX90614", './config.json',2)
     return largePotGeneation, stream_A,stream_B,stream_C
 
-def creatDataPoint(largePotGeneation,stream_A,stream_B,stream_C):
+def creatDataPoint():
     #instad of calling random int i will use the functions the cody makes
 
     sensorName_a = "/sys/bus/w1/devices/28-0000055fd19b/w1_slave"
@@ -89,4 +95,4 @@ def creatDataPoint(largePotGeneation,stream_A,stream_B,stream_C):
     addPointToStreamingGraph(timeOfMessurment, temp2, stream_B)
     addPointToStreamingGraph(timeOfMessurment, temp3, stream_C)
     addPointToLargeStreamingGraph(largePotGeneation,timeOfMessurment,temp1,temp2,temp3)
-    threading.Timer(10, creatDataPoint).start()
+    threading.Timer(2, creatDataPoint).start()
