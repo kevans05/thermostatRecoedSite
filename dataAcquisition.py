@@ -94,4 +94,4 @@ def creatDataPoint():
     addPointToStreamingGraph(timeOfMessurment, temp2, stream_B)
     addPointToStreamingGraph(timeOfMessurment, temp3, stream_C)
     addPointToLargeStreamingGraph(largePotGeneation,timeOfMessurment,temp1,temp2,temp3)
-    threading.Timer(1, creatDataPoint).start()
+    threading.Timer(10, creatDataPoint).start()
